@@ -11,47 +11,51 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/textGuessingGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/guessing_game"
             android:layout_marginTop="20dp"
             android:gravity="center"
+            android:text="@string/guessing_game"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
             android:id="@+id/textEnterNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enter_a_number_between_1_and_100"
             android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/enter_a_number_between_1_and_100"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <EditText
             android:id="@+id/editTextNumber"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:inputType="number"
             android:layout_marginTop="20dp"
-            android:autofillHints="" />
+            android:gravity="center"
+            android:inputType="number" />
 
         <Button
             android:id="@+id/buttonGuess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/guess"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/guess" />
 
         <TextView
             android:id="@+id/textClickGuess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enter_a_number_then_click_guess"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="@string/enter_a_number_then_click_guess" />
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

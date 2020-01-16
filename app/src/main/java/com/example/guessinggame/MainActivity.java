@@ -1,12 +1,14 @@
 package com.example.guessinggame;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,20 +22,23 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonGuess;
     private TextView textClickGuess;
     private int theNumber;
+    private int numberOfTries = 0;
 
 
     public void checkGuess() {
 
+
         String userGuessNumberText;
         String message = "";
+        String messageTries;
         int userGuessNumber;
         userGuessNumberText = editTextNumber.getText().toString();
 
         try {
 
             userGuessNumber = Integer.parseInt(userGuessNumberText);
-
-            if (userGuessNumber > 100 && userGuessNumber < 0 ) {
+            numberOfTries++;
+            if (userGuessNumber > 100) {
                 message = userGuessNumber + " Out of range. Try again.";
             }
 
@@ -47,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (userGuessNumber == theNumber) {
                 message = userGuessNumber + " is correct. You win! Let's play again!";
+                messageTries = numberOfTries + " tries!";
+                Toast.makeText(MainActivity.this, messageTries, Toast.LENGTH_LONG).show();
                 newGame();
             }
 
@@ -80,7 +87,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 checkGuess();
+            }
+        });
 
+        editTextNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                checkGuess();
+                return true;
             }
         });
 
