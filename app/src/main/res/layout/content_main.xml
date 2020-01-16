@@ -24,7 +24,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
-            android:id="@+id/textEnterNumber"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -35,7 +35,7 @@
 
         <EditText
             android:id="@+id/editTextNumber"
-            android:layout_width="150dp"
+            android:layout_width="80dp"
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
