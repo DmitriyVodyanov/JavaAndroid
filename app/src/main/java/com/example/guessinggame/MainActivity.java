@@ -1,31 +1,68 @@
 package com.example.guessinggame;
 
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextNumber;
     private Button buttonGuess;
     private TextView textClickGuess;
+    private int theNumber;
 
 
     public void checkGuess() {
 
-        String guessText;
-        guessText = editTextNumber.getText().toString();
+        String userGuessNumberText;
+        String message = "";
+        int userGuessNumber;
+        userGuessNumberText = editTextNumber.getText().toString();
+
+        try {
+
+            userGuessNumber = Integer.parseInt(userGuessNumberText);
+
+            if (userGuessNumber > 100 && userGuessNumber < 0 ) {
+                message = userGuessNumber + " Out of range. Try again.";
+            }
+
+            if (userGuessNumber < theNumber) {
+                message = userGuessNumber + " is too low. Try again.";
+            }
+
+            if (userGuessNumber > theNumber) {
+                message = userGuessNumber + " is too high. Try again.";
+            }
+
+            if (userGuessNumber == theNumber) {
+                message = userGuessNumber + " is correct. You win! Let's play again!";
+                newGame();
+            }
+
+        } catch (Exception e) {
+            message = "Enter a whole number between 1 and 100.";
+        }
+        finally {
+            textClickGuess.setText(message);
+            editTextNumber.requestFocus();
+            editTextNumber.selectAll();
+
+        }
+    }
+
+    public void newGame() {
+        theNumber = (int)(Math.random() * 100 + 1);
     }
 
     @Override
@@ -36,6 +73,16 @@ public class MainActivity extends AppCompatActivity {
         editTextNumber = findViewById(R.id.editTextNumber);
         buttonGuess = findViewById(R.id.buttonGuess);
         textClickGuess = findViewById(R.id.textClickGuess);
+
+        newGame();
+
+        buttonGuess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkGuess();
+
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
