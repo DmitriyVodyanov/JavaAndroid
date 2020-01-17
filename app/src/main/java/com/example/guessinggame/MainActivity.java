@@ -1,5 +1,6 @@
 package com.example.guessinggame;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         labelRange.setText("Enter a number between 1 and " + range + ".");
         textClickGuess.setText(R.string.enter_a_number_then_click_guess);
         editTextNumber.setText("");
-//        editTextNumber.selectAll();
 
     }
 
@@ -96,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         editTextNumber = findViewById(R.id.editTextNumber);
         buttonGuess = findViewById(R.id.buttonGuess);
         textClickGuess = findViewById(R.id.textClickGuess);
@@ -103,12 +103,14 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         range = preferences.getInt("range", range);
         newGame();
+
         buttonGuess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkGuess();
             }
         });
+
         editTextNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
