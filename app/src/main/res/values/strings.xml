@@ -9,6 +9,9 @@
     <string name="about_title">About Guessing Game</string>
     <string name="about_message">(c)2018 Your Name.</string>
 
+    <string name="statistic_title">Guessing Game Stats</string>
+    <string name="statistic_message">You have won: </string>
+
     <string name="setting_game_title">Select the Range: </string>
 
 
@@ -16,6 +19,8 @@
     <string name="enter_a_number_between_1_and_100">Enter a number between 1 and 100:</string>
     <string name="guess">Guess!</string>
     <string name="enter_a_number_then_click_guess">Enter a number, then click Guess!</string>
+
+    <string name="games_won">Enter a number, then click Guess!</string>
 
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>

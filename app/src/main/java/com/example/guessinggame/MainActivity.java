@@ -1,7 +1,9 @@
 package com.example.guessinggame;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
                 message = userGuessNumber + " is correct. You win! Let's play again!";
                 messageTries = numberOfTries + " tries!";
                 Toast.makeText(MainActivity.this, messageTries, Toast.LENGTH_LONG).show();
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                int gamesWon = preferences.getInt("gamesWon", 0) + 1;
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("gamesWon", gamesWon);
+                editor.apply();
                 newGame();
             }
 
@@ -77,9 +84,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void newGame() {
-        theNumber = (int)(Math.random() * 100 + 1);
+        theNumber = (int)(Math.random() * range + 1);
         labelRange.setText("Enter a number between 1 and " + range + ".");
-//        editTextNumber.requestFocus();
+        textClickGuess.setText(R.string.enter_a_number_then_click_guess);
+        editTextNumber.setText("");
 //        editTextNumber.selectAll();
 
     }
@@ -88,21 +96,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         editTextNumber = findViewById(R.id.editTextNumber);
         buttonGuess = findViewById(R.id.buttonGuess);
         textClickGuess = findViewById(R.id.textClickGuess);
         labelRange = findViewById(R.id.textEnterNumber);
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        range = preferences.getInt("range", range);
         newGame();
-
         buttonGuess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkGuess();
             }
         });
-
         editTextNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -148,14 +154,17 @@ public class MainActivity extends AppCompatActivity {
                                 switch (item) {
                                     case 0:
                                         range = RANGEONE;
+                                        storageRange(range);
                                         newGame();
                                         break;
                                     case 1:
                                         range = RANGETWO;
+                                        storageRange(range);
                                         newGame();
                                         break;
                                     case 2:
                                         range = RANGETHREE;
+                                        storageRange(range);
                                         newGame();
                                         break;
                                 }
@@ -169,6 +178,18 @@ public class MainActivity extends AppCompatActivity {
                 newGame();
                 return true;
             case R.id.action_gamestats:
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                int gamesWon = preferences.getInt("gamesWon", 0);
+                AlertDialog.Builder statisticDialog = new AlertDialog.Builder(MainActivity.this);
+                statisticDialog.setTitle(R.string.statistic_title)
+                        .setMessage("You have won " + gamesWon + " games. Way to go!")
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                dialog.dismiss();
+                            }
+                        });
+                statisticDialog.show();
                 return true;
             case R.id.action_about:
                 AlertDialog.Builder aboutDialog = new AlertDialog.Builder(MainActivity.this);
@@ -185,5 +206,13 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void storageRange(int newRange) {
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("range", newRange);
+        editor.apply();
     }
 }
