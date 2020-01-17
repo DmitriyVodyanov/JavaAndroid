@@ -35,7 +35,7 @@
 
         <EditText
             android:id="@+id/editTextNumber"
-            android:layout_width="150dp"
+            android:layout_width="80dp"
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
