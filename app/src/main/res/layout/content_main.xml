@@ -8,54 +8,59 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <LinearLayout
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical" >
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textGuessingGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
             android:text="@string/guessing_game"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
-            android:id="@+id/textEnterNumber"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
             android:text="@string/enter_a_number_between_1_and_100"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <EditText
             android:id="@+id/editTextNumber"
-            android:layout_width="150dp"
+            android:layout_width="80dp"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:inputType="number" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:inputType="number"
+            android:textAlignment="gravity"/>
 
         <Button
             android:id="@+id/buttonGuess"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
             android:text="@string/guess" />
 
         <TextView
             android:id="@+id/textClickGuess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="250dp"
             android:text="@string/enter_a_number_then_click_guess" />
 
+    </RelativeLayout>
 
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
