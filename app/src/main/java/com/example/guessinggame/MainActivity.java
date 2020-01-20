@@ -27,12 +27,14 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonGuess;
     private TextView textClickGuess;
     private int theNumber;
-    private int numberOfTries = 0;
+    private int numberOfTries;
+    private int maxTries = 0;
     private int range = 100;
     private final int RANGEONE = 10;
     private final int RANGETWO = 100;
     private final int RANGETHREE = 1000;
     private TextView labelRange;
+    private int leftTries = 0;
 
 
     public void checkGuess() {
@@ -48,16 +50,27 @@ public class MainActivity extends AppCompatActivity {
 
             userGuessNumber = Integer.parseInt(userGuessNumberText);
             numberOfTries++;
-            if (userGuessNumber > 100) {
-                message = userGuessNumber + " Out of range. Try again.";
+
+            leftTries = getLeftTries(maxTries);
+
+            if (numberOfTries > maxTries) {
+                message = numberOfTries + " of " + maxTries + " tries. You loose! Let's play again!";
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                int gamesLoose = preferences.getInt("gamesLoose", 0) + 1;
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("gamesLoose", gamesLoose);
+                editor.apply();
+                newGame();
+                return;
             }
 
             if (userGuessNumber < theNumber) {
-                message = userGuessNumber + " is too low. Try again.";
+                message = userGuessNumber + " is too low. Try again. Left " + leftTries + " tries";
             }
 
             if (userGuessNumber > theNumber) {
-                message = userGuessNumber + " is too high. Try again.";
+                message = userGuessNumber + " is too high. Try again. Left " + leftTries + " tries";
             }
 
             if (userGuessNumber == theNumber) {
@@ -72,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 newGame();
             }
 
+
+
         } catch (Exception e) {
             message = "Enter a whole number between 1 and " + range + ".";
         }
@@ -85,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void newGame() {
         theNumber = (int)(Math.random() * range + 1);
+        maxTries = getMaxTries(range);
+        numberOfTries = 0;
         labelRange.setText("Enter a number between 1 and " + range + ".");
         textClickGuess.setText(R.string.enter_a_number_then_click_guess);
         editTextNumber.setText("");
@@ -182,9 +199,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_gamestats:
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                 int gamesWon = preferences.getInt("gamesWon", 0);
+                int gamesLoose = preferences.getInt("gamesLoose", 0);
                 AlertDialog.Builder statisticDialog = new AlertDialog.Builder(MainActivity.this);
                 statisticDialog.setTitle(R.string.statistic_title)
-                        .setMessage("You have won " + gamesWon + " games. Way to go!")
+                        .setMessage("You have won " + gamesWon + " games. Way to go! You have loose " + gamesLoose)
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int i) {
@@ -216,5 +234,15 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("range", newRange);
         editor.apply();
+    }
+
+    public int getLeftTries(int maxTries) {
+        int leftTries = maxTries - numberOfTries;
+        return leftTries;
+    }
+
+    public int getMaxTries (int range) {
+        maxTries = (int)(Math.log(range)/Math.log(2) + 1);
+        return maxTries;
     }
 }
